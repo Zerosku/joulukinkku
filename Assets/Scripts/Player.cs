@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : GameController {
 
 	private GameObject player;
+
+    private GameMaster gm;
+
+    
 
 	// pelaajan nopeus
 	public float playerSpeed = 0.03f;
@@ -11,6 +16,7 @@ public class Player : GameController {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("testipelaaja");
+        gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
 	}
 
 	// Update is called once per frame
@@ -36,5 +42,14 @@ public class Player : GameController {
 			player.transform.Translate (playerSpeed, 0, 0);
 		}
 	}
-		
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+
+        if (col.CompareTag("Coin"))
+        {
+            Destroy(col.gameObject);
+            gm.points += 1;
+        }
+    }
 }
