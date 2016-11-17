@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Player : GameController {
 
-	private GameObject player;
+	public static GameObject player;
 
     private GameMaster gm;
 
@@ -15,34 +15,42 @@ public class Player : GameController {
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("testipelaaja");
+		player = GameObject.Find ("Player");
         gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+
 	}
 
 	// Update is called once per frame
 	void Update () {
 		Movement (playerSpeed);
 	}
+
 	// player movements
 	public void Movement (float playerSpeed){
+
 		if (Input.GetKey("up")) {
-			Debug.Log ("Move up");
+			//Debug.Log ("Move up");
 			player.transform.Translate (0, playerSpeed, 0);
 		}
+		else if (Input.GetKey("up") && Input.GetKey("left")) {
+			//Debug.Log ("Move up/left");
+			player.transform.Translate (-playerSpeed, playerSpeed, 0);
+		}
 		else if (Input.GetKey("down")) {
-			Debug.Log ("Move down");
+			//Debug.Log ("Move down");
 			player.transform.Translate (0, -playerSpeed, 0);
 		}
 		else if (Input.GetKey("left")) {
-			Debug.Log ("Move left");
+			//Debug.Log ("Move left");
 			player.transform.Translate (-playerSpeed, 0, 0);
 		}
 		else if (Input.GetKey("right")) {
-			Debug.Log ("Move right");
+			//Debug.Log ("Move right");
 			player.transform.Translate (playerSpeed, 0, 0);
 		}
 	}
 
+	// kolikkosettii
     void OnTriggerEnter2D(Collider2D col)
     {
 
@@ -52,4 +60,5 @@ public class Player : GameController {
             gm.points += 1;
         }
     }
+
 }
