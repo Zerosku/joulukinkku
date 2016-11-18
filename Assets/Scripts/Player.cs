@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class Player : GameController {
 
 	public static GameObject player;
-
+    private Rigidbody2D possukeho;
     private GameMaster gm;
-
-    
+    private Animator possu;
+    private bool facingright = true;
 
 	// pelaajan nopeus
 	public float playerSpeed = 0.03f;
@@ -17,41 +17,81 @@ public class Player : GameController {
 	void Start () {
 		player = GameObject.Find ("Player");
         gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+        possu = GetComponent<Animator>();
+        possukeho = GetComponent<Rigidbody2D>();
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 		Movement (playerSpeed);
+        transform.rotation = Quaternion.identity;
 	}
 
 	// player movements
 	public void Movement (float playerSpeed){
 
 		if (Input.GetKey("up")) {
-			//Debug.Log ("Move up");
-			player.transform.Translate (0, playerSpeed, 0);
-		}
-		else if (Input.GetKey("up") && Input.GetKey("left")) {
-			//Debug.Log ("Move up/left");
-			player.transform.Translate (-playerSpeed, playerSpeed, 0);
-		}
-		else if (Input.GetKey("down")) {
-			//Debug.Log ("Move down");
-			player.transform.Translate (0, -playerSpeed, 0);
-		}
-		else if (Input.GetKey("left")) {
-			//Debug.Log ("Move left");
-			player.transform.Translate (-playerSpeed, 0, 0);
-		}
-		else if (Input.GetKey("right")) {
-			//Debug.Log ("Move right");
-			player.transform.Translate (playerSpeed, 0, 0);
-		}
-	}
+            //Debug.Log ("Move up");
+            //player.transform.Translate (0, playerSpeed, 0);
+            possukeho.velocity = new Vector2(0, 1);
+            possu.SetBool("walking", true);
 
-	// kolikkosettii
-    void OnTriggerEnter2D(Collider2D col)
+        }
+        else if (Input.GetKey("up") && Input.GetKey("left")) {
+            //Debug.Log ("Move up/left");
+            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+            possukeho.velocity = new Vector2(-1, 1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else if (Input.GetKey("down")) {
+            //Debug.Log ("Move down");
+            //player.transform.Translate (0, -playerSpeed, 0);
+            possukeho.velocity = new Vector2(0, -1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else if (Input.GetKey("left")) {
+            //Debug.Log ("Move left");
+            //player.transform.Translate (-playerSpeed, 0, 0);
+            possukeho.velocity = new Vector2(-1, 0);
+            RotatePig(-1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else if (Input.GetKey("right")) {
+            //Debug.Log ("Move right");
+            //player.transform.Translate (playerSpeed, 0, 0);
+            possukeho.velocity = new Vector2(1, 0);
+            RotatePig(1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else
+        {
+            possukeho.velocity = new Vector2(0, 0);
+            possu.SetBool("walking", false);
+
+        }
+    }
+    void RotatePig(int abs)
+    {
+        
+        if (abs>0 && !facingright || abs<0 && facingright)
+        {
+            facingright = !facingright;
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+    
+
+    }
+        // kolikkosettii
+        void OnTriggerEnter2D(Collider2D col)
     {
 
         if (col.CompareTag("Coin"))
