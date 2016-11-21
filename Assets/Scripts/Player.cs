@@ -23,6 +23,7 @@ public class Player : GameController {
         gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         possu = GetComponent<Animator>();
         possukeho = GetComponent<Rigidbody2D>();
+        player.transform.SetAsLastSibling();
 
         curHealth = maxHealth;
 

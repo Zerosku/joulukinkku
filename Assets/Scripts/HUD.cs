@@ -13,6 +13,9 @@ public class HUD : MonoBehaviour {
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        
+
+
 
     }
     void Update()
