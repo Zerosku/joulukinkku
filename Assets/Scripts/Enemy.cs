@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		transform.rotation = Quaternion.identity;
 
+		//EnemyTrigger.EnemyAggro ();
+	}
+
+	void FixedUpdate(){
 		EnemyTrigger.EnemyAggro ();
 	}
 		

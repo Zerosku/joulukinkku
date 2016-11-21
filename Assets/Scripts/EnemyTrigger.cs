@@ -7,14 +7,20 @@ public class EnemyTrigger : Enemy {
 
 	private static bool touching = false;
 
+	public static Transform lookAtPlayer;
+
 	// enemy
 	private static GameObject enemy;
 
 	public static Vector2 paska;
 
+	private static float enemyX;
+
+	private static float enemyY;
+
 
 	//player
-	private static GameObject pelaaja;
+	public static GameObject pelaaja;
 
 	private static Vector2 pelaajaVector;
 
@@ -48,18 +54,24 @@ public class EnemyTrigger : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-		pelaajaX = Player.player.transform.position.x;
-		pelaajaY = Player.player.transform.position.y;
+		//pelaajan x ja y
+		pelaajaX = pelaaja.transform.position.x;
+		pelaajaY = pelaaja.transform.position.y;
+
+		// vihollisen x j y
+		enemyX = enemy.transform.position.x;
+		enemyY = enemy.transform.position.y;
 
 		// Debug.Log (paska);
+		//Debug.Log(pelaaja.transform.position.x);
 		Vector2 paska = enemy.transform.position;
 		Vector2 pelaajaVector = pelaaja.transform.position;
 	}
 		
 	// enemysettii
-
 	public static void EnemyWalk (){
-		pahiskeho.velocity = new Vector2 (-pelaajaX , -pelaajaY);
+		//transform.LookAt (lookAtPlayer);
+		pahiskeho.velocity = new Vector2 (pelaajaX , pelaajaY);
 	}
 
 	public static void EnemyAggro (){
