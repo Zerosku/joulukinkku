@@ -13,6 +13,10 @@ public class Player : GameController {
 	// pelaajan nopeus
 	public float playerSpeed = 0.03f;
 
+    // terveys
+    public int curHealth;
+    public int maxHealth = 5;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Player");
@@ -20,12 +24,23 @@ public class Player : GameController {
         possu = GetComponent<Animator>();
         possukeho = GetComponent<Rigidbody2D>();
 
+        curHealth = maxHealth;
+
 	}
 
 	// Update is called once per frame
 	void Update () {
 		Movement (playerSpeed);
         transform.rotation = Quaternion.identity;
+        
+        if (curHealth > maxHealth)
+        {
+            curHealth = maxHealth;
+        }
+        if (curHealth <= 0)
+        {
+            Die();
+        }
 	}
 
 	// player movements
@@ -36,15 +51,17 @@ public class Player : GameController {
             //player.transform.Translate (0, playerSpeed, 0);
             possukeho.velocity = new Vector2(0, 1);
             possu.SetBool("walking", true);
+            
 
         }
-        else if (Input.GetKey("up") && Input.GetKey("left")) {
-            //Debug.Log ("Move up/left");
-            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-            possukeho.velocity = new Vector2(-1, 1);
-            possu.SetBool("walking", true);
+        else if ((Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))){ 
+                //Debug.Log ("Move up/left");
+                //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+                possukeho.velocity = new Vector2(-1, 1);
+                possu.SetBool("walking", true);
+            Debug.Log("morjenttes vaan");
 
-
+            
         }
         else if (Input.GetKey("down")) {
             //Debug.Log ("Move down");
@@ -99,6 +116,13 @@ public class Player : GameController {
             Destroy(col.gameObject);
             gm.points += 1;
         }
+    }
+
+    void Die ()
+    {
+        //restart
+        Application.LoadLevel(Application.loadedLevel);
+
     }
 
 }
