@@ -7,7 +7,7 @@ public class EnemyTrigger : Enemy {
 
 	private static bool touching = false;
 
-	public static Transform lookAtPlayer;
+	public Transform PlayerTransform;
 
 	// enemy
 	private static GameObject enemy;
@@ -28,32 +28,25 @@ public class EnemyTrigger : Enemy {
 
 	private static float pelaajaY;
 
+	//player - enemy
+	private static float goX;
+
+	private static float goY;
+
 	// vihollisen nopeus
 	public static float enemySpeed = 0.02f;
 
-	// vihun vector2
-	// private static Vector2 enemyVector = enemy.transform.position;
-
-	// mitä kohti lähdetään EnemyAggro () : ssa
-	// public static Vector2 playerMan = Player.player.transform.position;
-
-	// private static Transform transform;
-
-
-	// Use this for initialization
 	void Start () {
 		enemy = GameObject.Find ("Enemy");
-		//Vector2 paska = enemy.transform.position;
 
 		pelaaja = GameObject.Find ("Player");
-		//Vector2 pelaajaVector = pelaaja.transform.position;
 
 		EnemyCollider = GameObject.Find ("EnemyTrigger");
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
 		//pelaajan x ja y
 		pelaajaX = pelaaja.transform.position.x;
 		pelaajaY = pelaaja.transform.position.y;
@@ -61,6 +54,10 @@ public class EnemyTrigger : Enemy {
 		// vihollisen x j y
 		enemyX = enemy.transform.position.x;
 		enemyY = enemy.transform.position.y;
+
+		// pelaja - vihollinen = SUCCESS!
+		goX = pelaajaX - enemyX;
+		goY = pelaajaY - enemyY;
 
 		// Debug.Log (paska);
 		//Debug.Log(pelaaja.transform.position.x);
@@ -71,14 +68,16 @@ public class EnemyTrigger : Enemy {
 	// enemysettii
 	public static void EnemyWalk (){
 		//transform.LookAt (lookAtPlayer);
-		pahiskeho.velocity = new Vector2 (pelaajaX , pelaajaY);
+		pahiskeho.velocity = new Vector2 (goX , goY);
 	}
 
 	public static void EnemyAggro (){
 
-		if (touching){
+		if (touching) {
 			// Debug.Log ("enemy triggered");
 			EnemyWalk ();
+		} else {
+			Enemy.pahiskeho.velocity = new Vector2(0, 0);
 		}
 	}
 
