@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : GameController {
 
@@ -9,7 +10,7 @@ public class Player : GameController {
     private GameMaster gm;
     private Animator possu;
     private bool facingright = true;
-
+    private bool dead = false;
 	// pelaajan nopeus
 	public float playerSpeed = 0.03f;
 
@@ -24,7 +25,6 @@ public class Player : GameController {
         possu = GetComponent<Animator>();
         possukeho = GetComponent<Rigidbody2D>();
         player.transform.SetAsLastSibling();
-
         curHealth = maxHealth;
 
 	}
@@ -40,7 +40,11 @@ public class Player : GameController {
         }
         if (curHealth <= 0)
         {
-            Die();
+            if(!dead){
+                dead = true;
+                possukeho.gravityScale=-15;
+                StartCoroutine(Die());
+            }
         }
 	}
 
@@ -119,10 +123,14 @@ public class Player : GameController {
         }
     }
 
-    void Die ()
+    IEnumerator Die ()
     {
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
+        yield return new WaitForSeconds(1);
+        possukeho.gravityScale = 15;
         //restart
-        Application.LoadLevel(Application.loadedLevel);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }
 

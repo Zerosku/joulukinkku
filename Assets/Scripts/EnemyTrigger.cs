@@ -7,8 +7,6 @@ public class EnemyTrigger : Enemy {
 
 	private static bool touching = false;
 
-	public Transform PlayerTransform;
-
 	// enemy
 	private static GameObject enemy;
 
