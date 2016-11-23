@@ -14,6 +14,9 @@ public class Player : GameController {
 	// pelaajan nopeus
 	public float playerSpeed = 0.03f;
 
+    //karma
+    private int karma = 0;
+
     // terveys
     public int curHealth;
     public int maxHealth = 5;
@@ -101,6 +104,7 @@ public class Player : GameController {
 
         }
     }
+    //possun animaation kääntö
     void RotatePig(int abs)
     {
         
@@ -122,7 +126,7 @@ public class Player : GameController {
             gm.points += 1;
         }
     }
-
+    // kuolema
     IEnumerator Die ()
     {
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
@@ -134,4 +138,15 @@ public class Player : GameController {
 
     }
 
+    void goodbadkarma()
+    {
+        if (karma > 5)
+        {
+            possu.SetBool("good", true);
+        }
+        if (karma < -5)
+        {
+            possu.SetBool("bad", true);
+        }
+    }
 }
