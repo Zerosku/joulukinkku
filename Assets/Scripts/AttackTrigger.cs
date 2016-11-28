@@ -7,9 +7,10 @@ public class AttackTrigger : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.isTrigger != true && col.CompareTag("Enemy"))
+        if (col.isTrigger != true && col.CompareTag("EnemyHitbox"))
         {
-            col.SendMessageUpwards("Damage", dmg);
+            // col.SendMessageUpwards("Damage", dmg);
+            Debug.Log("Enemy ottaa hittii");
         }
     }
 }
