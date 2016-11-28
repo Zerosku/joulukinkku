@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 
+
 	public GameObject slots;
 	int x = -109;
 	int y = 111;
@@ -17,10 +18,11 @@ public class Inventory : MonoBehaviour {
 			{
 				GameObject slot = (GameObject)Instantiate (slots);
 				slot.transform.parent = this.gameObject.transform;
+				slot.name = "Slot" + i + "." + k;
 				slot.GetComponent<RectTransform> ().localPosition = new Vector3 (x, y, 0);
 				x = x + 55;
 
-				if (k == 4) {
+				if (k == 5) {
 				
 					x = -109;
 					y = y - 55;
