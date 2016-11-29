@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour {
     }
     public void RotateEnemy(float abs)
     {
-        if (abs > 0 && !facingright || abs < 0 && facingright)
+        if (abs > 0 && facingright || abs < 0 && !facingright)
         {
             facingright = !facingright;
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);

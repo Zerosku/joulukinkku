@@ -88,7 +88,7 @@ public class EnemyTrigger : Enemy
     }
 
     // kun pelaaja osuu vihollisen enemytrigger- alueelle
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Player")
         {

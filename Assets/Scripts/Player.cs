@@ -20,19 +20,31 @@ public class Player : MonoBehaviour {
 
     // pisteet ja karma
     public GameMaster gm;
+    public int karma = 0;
+
+    // äänet
+
     public AudioClip soundCoin;
     private AudioSource source { get { return GetComponent<AudioSource>(); } }
-    public int karma = 0;
 
     // terveys
     public static int curHealth;
     public int maxHealth = 5;
     public bool kuolema = false;
     public GameObject Paussi;
-   
 
-	// Use this for initialization
-	void Start () {
+    private ButtonController upButton;
+    private ButtonController downButton;
+    private ButtonController leftButton;
+    private ButtonController rightButton;
+    private ButtonController upRight;
+    private ButtonController upLeft;
+    private ButtonController downLeft;
+    private ButtonController downRight;
+
+
+    // Use this for initialization
+    void Start () {
 		player = GameObject.Find ("Player");
         gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         possu = GetComponent<Animator>();
@@ -41,22 +53,37 @@ public class Player : MonoBehaviour {
         curHealth = maxHealth;
         DeadUI.SetActive(false);
 
+        upButton = GameObject.Find("ButtonUp").GetComponent<ButtonController>();
+        downButton = GameObject.Find("ButtonDown").GetComponent<ButtonController>();
+        leftButton = GameObject.Find("ButtonLeft").GetComponent<ButtonController>();
+        rightButton = GameObject.Find("ButtonRight").GetComponent<ButtonController>();
+        upRight = GameObject.Find("UpRight").GetComponent<ButtonController>();
+        upLeft = GameObject.Find("UpLeft").GetComponent<ButtonController>();
+        downLeft = GameObject.Find("DownLeft").GetComponent<ButtonController>();
+        downRight = GameObject.Find("DownRight").GetComponent<ButtonController>();
+
 
         //kolikko äänet
         gameObject.AddComponent<AudioSource>();
         source.clip = soundCoin;
+
         source.playOnAwake = false;
 
     }
-
+    void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
 	// Update is called once per frame
 	void Update () {
         
-
+        //karma tarkistus
         goodbadkarma();
 
-        Movement (playerSpeed);
+        //liikkuminen
+        Movement(playerSpeed);
         transform.rotation = Quaternion.identity;
+        
         
         if (curHealth > maxHealth)
         {
@@ -74,7 +101,7 @@ public class Player : MonoBehaviour {
 	// player movements
 	public void Movement (float playerSpeed){
 
-		if (Input.GetKey("up")) {
+		if (Input.GetKey("up")||upButton.pressed) {
             //Debug.Log ("Move up");
             //player.transform.Translate (0, playerSpeed, 0);
             possukeho.velocity = new Vector2(0, 1);
@@ -82,16 +109,8 @@ public class Player : MonoBehaviour {
             
 
         }
-        else if ((Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow))){ 
-                //Debug.Log ("Move up/left");
-                //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-                possukeho.velocity = new Vector2(-1, 1);
-                possu.SetBool("walking", true);
-            Debug.Log("morjenttes vaan");
-
-            
-        }
-        else if (Input.GetKey("down")) {
+        
+        else if (Input.GetKey("down")||downButton.pressed) {
             //Debug.Log ("Move down");
             //player.transform.Translate (0, -playerSpeed, 0);
             possukeho.velocity = new Vector2(0, -1);
@@ -99,7 +118,7 @@ public class Player : MonoBehaviour {
 
 
         }
-        else if (Input.GetKey("left")) {
+        else if (Input.GetKey("left")||leftButton.pressed) {
             //Debug.Log ("Move left");
             //player.transform.Translate (-playerSpeed, 0, 0);
             possukeho.velocity = new Vector2(-1, 0);
@@ -108,12 +127,56 @@ public class Player : MonoBehaviour {
 
 
         }
-        else if (Input.GetKey("right")) {
+        else if (Input.GetKey("right")||rightButton.pressed) {
             //Debug.Log ("Move right");
             //player.transform.Translate (playerSpeed, 0, 0);
             possukeho.velocity = new Vector2(1, 0);
             RotatePig(1);
             possu.SetBool("walking", true);
+
+
+        }
+        else if (upLeft.pressed)
+        {
+            //Debug.Log ("Move up/left");
+            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+            possukeho.velocity = new Vector2(-1, 1);
+            RotatePig(-1);
+            possu.SetBool("walking", true);
+           
+
+
+        }
+        else if (upRight.pressed)
+        {
+            //Debug.Log ("Move up/left");
+            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+            possukeho.velocity = new Vector2(1, 1);
+            RotatePig(1);
+            possu.SetBool("walking", true);
+           
+
+
+        }
+        else if (downRight.pressed)
+        {
+            //Debug.Log ("Move up/left");
+            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+            possukeho.velocity = new Vector2(1, -1);
+            RotatePig(1);
+            possu.SetBool("walking", true);
+            
+
+
+        }
+        else if (downLeft.pressed)
+        {
+            //Debug.Log ("Move up/left");
+            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
+            possukeho.velocity = new Vector2(-1, -1);
+            RotatePig(-1);
+            possu.SetBool("walking", true);
+            
 
 
         }
@@ -180,7 +243,5 @@ public class Player : MonoBehaviour {
             possu.SetBool("bad", true);
         }
     }
-
-    // terveyden menetys
 
 }
