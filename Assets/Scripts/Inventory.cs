@@ -9,9 +9,8 @@ public class Inventory : MonoBehaviour {
 	int x = -109;
 	int y = 111;
 
-	// Use this for initialization
 	void Start () {
-	
+    
 		for(int i = 1; i < 6; i ++)
 		{
 			for (int k = 1; k < 6; k++) 

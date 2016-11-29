@@ -10,8 +10,7 @@ public class SlotScript : MonoBehaviour, IPointerDownHandler {
 	void Start () {
 		itemImage = gameObject.transform.GetChild (0).GetComponent<Image> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 		if (item != null) {
@@ -25,6 +24,6 @@ public class SlotScript : MonoBehaviour, IPointerDownHandler {
 	public void OnPointerDown(PointerEventData data){
 
 		Debug.Log (transform.name);
-	
+
 	}
 }
