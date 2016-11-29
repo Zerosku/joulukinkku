@@ -3,23 +3,33 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Player : GameController {
+public class Player : MonoBehaviour {
 
+    //possun osia
 	public static GameObject player;
     private Rigidbody2D possukeho;
-    private GameMaster gm;
-    private Animator possu;
-    private bool facingright = true;
-    private bool dead = false;
-	// pelaajan nopeus
-	public float playerSpeed = 0.03f;
 
-    //karma
-    private int karma = 0;
+    //possun animaatio
+    private Animator possu;
+    public bool facingright = true;
+
+    public GameObject DeadUI;
+
+    // pelaajan nopeus
+    public float playerSpeed = 0.03f;
+
+    // pisteet ja karma
+    public GameMaster gm;
+    public AudioClip soundCoin;
+    private AudioSource source { get { return GetComponent<AudioSource>(); } }
+    public int karma = 0;
 
     // terveys
-    public int curHealth;
+    public static int curHealth;
     public int maxHealth = 5;
+    public bool kuolema = false;
+    public GameObject Paussi;
+   
 
 	// Use this for initialization
 	void Start () {
@@ -29,27 +39,37 @@ public class Player : GameController {
         possukeho = GetComponent<Rigidbody2D>();
         player.transform.SetAsLastSibling();
         curHealth = maxHealth;
+        DeadUI.SetActive(false);
 
-	}
+
+        //kolikko äänet
+        gameObject.AddComponent<AudioSource>();
+        source.clip = soundCoin;
+        source.playOnAwake = false;
+
+    }
 
 	// Update is called once per frame
 	void Update () {
-		Movement (playerSpeed);
+        
+
+        goodbadkarma();
+
+        Movement (playerSpeed);
         transform.rotation = Quaternion.identity;
         
         if (curHealth > maxHealth)
         {
             curHealth = maxHealth;
         }
+        
+
         if (curHealth <= 0)
         {
-            if(!dead){
-                dead = true;
-                possukeho.gravityScale=-15;
-                StartCoroutine(Die());
-            }
+            Die();
         }
-	}
+        
+    }
 
 	// player movements
 	public void Movement (float playerSpeed){
@@ -116,28 +136,39 @@ public class Player : GameController {
     
 
     }
-        // kolikkosettii
+        // pelaaja ja osumat vihollisiin tai esineisiin
         void OnTriggerEnter2D(Collider2D col)
     {
-
         if (col.CompareTag("Coin"))
-        {
+        { 
             Destroy(col.gameObject);
+            source.PlayOneShot(soundCoin);
             gm.points += 1;
         }
+        if (col.CompareTag("Health") && curHealth != maxHealth)
+        {
+            Destroy(col.gameObject);
+
+            curHealth++;
+        }
+
+
     }
     // kuolema
-    IEnumerator Die ()
+    void Die ()
     {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
-        yield return new WaitForSeconds(1);
-        possukeho.gravityScale = 15;
-        //restart
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        kuolema = !kuolema;
+        //pysäyttää peliajan kun kuolema on 
+        Paussi.GetComponent<PauseMenu>().enabled = false;
+
+        DeadUI.SetActive(true);
+        Time.timeScale = 0;
+
+
+
 
     }
-
+    // karma mittari
     void goodbadkarma()
     {
         if (karma > 5)
@@ -149,4 +180,7 @@ public class Player : GameController {
             possu.SetBool("bad", true);
         }
     }
+
+    // terveyden menetys
+
 }

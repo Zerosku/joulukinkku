@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour {
 
-    private bool attacking = false;
+    public bool attacking = false;
     private float attackTimer = 0;
     private float attackCd = 0.3f;
 
