@@ -231,6 +231,8 @@ public class Player : MonoBehaviour {
 
 
     }
+		
+
     // karma mittari
     void goodbadkarma()
     {
@@ -243,5 +245,8 @@ public class Player : MonoBehaviour {
             possu.SetBool("bad", true);
         }
     }
+
+
+			
 
 }
