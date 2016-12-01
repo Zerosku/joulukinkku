@@ -6,8 +6,9 @@ public class EnemyDamage : MonoBehaviour
 {
     public AudioClip soundDamage;
     private AudioSource source { get { return GetComponent<AudioSource>(); } }
-    private int frames;
+    private int frames = 0;
 
+    
     void Start()
     {
         gameObject.AddComponent<AudioSource>();
@@ -22,10 +23,10 @@ public class EnemyDamage : MonoBehaviour
     public void OnTriggerStay2D(Collider2D col)
     {
         //kun enemy osuu possun potkaisualueelle
-        if (col.CompareTag("Hitbox") && frames % 30 == 0)
+        if (col.CompareTag("Hitbox"))
         {
             Enemy.vihu.SetTrigger("damagetrigger");
-
+            
 
             //kääntää enemyn animaation pelaajan suuntaan
             if (!Enemy.player.facingright)
@@ -37,10 +38,10 @@ public class EnemyDamage : MonoBehaviour
                 Enemy.pahiskeho.AddForce(new Vector2(200, 0));
             }
         }
-        if (col.CompareTag("PlayerHitbox"))
+        if (col.CompareTag("PlayerHitbox") && frames % 30 == 0)
         {
             Player.curHealth--;
-            source.PlayOneShot(soundDamage);
+            AudioSource.PlayClipAtPoint(soundDamage, transform.position);
 
         }
     }

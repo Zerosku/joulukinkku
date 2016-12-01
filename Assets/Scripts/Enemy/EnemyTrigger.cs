@@ -4,50 +4,54 @@ using System.Collections;
 public class EnemyTrigger : Enemy
 {
 
-    public static GameObject EnemyCollider;
+    private GameObject EnemyCollider;
 
     private static bool touching = false;
 
     // enemy
-    private static GameObject enemy;
+    private static Transform enemy;
 
-    public static Vector2 enemyVector;
+    private static Vector2 enemyVector;
 
-    private static float enemyX;
+    private  float enemyX;
 
-    private static float enemyY;
+    private  float enemyY;
 
 
     //player
-    public static GameObject pelaaja;
+    private  GameObject pelaaja;
 
-    private static Vector2 pelaajaVector;
+    private  Vector2 pelaajaVector;
 
-    private static float pelaajaX;
+    private  float pelaajaX;
 
-    private static float pelaajaY;
+    private  float pelaajaY;
 
     //player - enemy
     public static float goX;
 
-    private static float goY;
+    public static float goY;
 
     // vihollisen nopeus
-    public static float enemySpeed = 0.02f;
+    private  float enemySpeed = 0.02f;
 
     void Start()
     {
-        enemy = GameObject.Find("Enemy");
-
+        // enemy = GameObject.Find("Butcher");
+        enemy = GetComponentInParent<Transform>();
+        Debug.Log(enemy);
         pelaaja = GameObject.Find("Player");
 
-        EnemyCollider = GameObject.Find("EnemyTrigger");
+        EnemyCollider = enemy.GetChild(0).gameObject;
+
+        
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
+
+
         //pelaajan x ja y
         pelaajaX = pelaaja.transform.position.x;
         pelaajaY = pelaaja.transform.position.y;
@@ -104,6 +108,7 @@ public class EnemyTrigger : Enemy
             touching = false;
         }
     }
+
 }
 	
 

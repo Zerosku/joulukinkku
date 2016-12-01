@@ -7,22 +7,27 @@ public class Enemy : MonoBehaviour {
 
 	public static Rigidbody2D pahiskeho;
 
-    public  static bool facingright = false;
+    private bool facingright = false;
 
     public static Animator vihu;
 
-    public static int enemyHealth;
+    private int enemyHealth;
 
     public static Player player;
 
-	// Use this for initialization
-	void Start () {
+    public static bool enemyhasdied;
+
+    private EnemyTrigger trigger;
+
+    // Use this for initialization
+    void Start () {
         player = FindObjectOfType<Player>();
         vihu = GetComponent<Animator>();
 		enemy = GameObject.Find ("EnemyBox");
 		pahiskeho = GetComponent<Rigidbody2D>();
-        enemyHealth = 5;
-	}
+        enemyHealth = 15;
+        enemyhasdied = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -41,8 +46,9 @@ public class Enemy : MonoBehaviour {
     {
         if (enemyHealth <= 0)
         {
+            enemyhasdied = true;
             Destroy(gameObject);
-
+            
         }
     }
     public void RotateEnemy(float abs)
@@ -51,6 +57,13 @@ public class Enemy : MonoBehaviour {
         {
             facingright = !facingright;
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Hitbox"))
+        {
+            enemyHealth--;
         }
     }
 }

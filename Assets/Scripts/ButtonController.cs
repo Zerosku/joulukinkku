@@ -8,13 +8,13 @@ public class ButtonController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public bool pressed;
 
     public void OnPointerDown(PointerEventData eventData)
-    {
-        pressed = true;
+    { 
+            pressed = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        pressed = false;
+            pressed = false;
     }
 
-}
+} 

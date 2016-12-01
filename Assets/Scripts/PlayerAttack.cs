@@ -7,7 +7,8 @@ public class PlayerAttack : MonoBehaviour {
     private float attackTimer = 0;
     private float attackCd = 0.3f;
     private ButtonController attackButton;
-
+    private AudioSource source { get { return GetComponent<AudioSource>(); } }
+    public AudioClip soundKick;
 
     public Collider2D attackTrigger;
 
@@ -18,7 +19,13 @@ public class PlayerAttack : MonoBehaviour {
         anim = gameObject.GetComponent<Animator>();
         attackTrigger.enabled = false;
         attackButton = GameObject.Find("AttackButton").GetComponent<ButtonController>();
+    }
+    void Start()
+    {
+        gameObject.AddComponent<AudioSource>();
+        source.clip = soundKick;
 
+        source.playOnAwake = false;
     }
     void Update ()
     {
@@ -26,7 +33,7 @@ public class PlayerAttack : MonoBehaviour {
         {
             attacking = true;
             attackTimer = attackCd;
-
+            source.PlayOneShot(soundKick);
             attackTrigger.enabled = true;
 
         }

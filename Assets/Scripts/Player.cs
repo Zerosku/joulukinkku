@@ -15,8 +15,9 @@ public class Player : MonoBehaviour {
 
     public GameObject DeadUI;
 
-    // pelaajan nopeus
+    // pelaajan liikkuminen
     public float playerSpeed = 0.03f;
+    public Joystick movePig;
 
     // pisteet ja karma
     public GameMaster gm;
@@ -24,8 +25,11 @@ public class Player : MonoBehaviour {
 
     // äänet
 
+    public AudioClip soundDeath;
+    private AudioSource sourceDeath { get { return GetComponent<AudioSource>(); } }
+
     public AudioClip soundCoin;
-    private AudioSource source { get { return GetComponent<AudioSource>(); } }
+    private AudioSource sourceCoin { get { return GetComponent<AudioSource>(); } }
 
     // terveys
     public static int curHealth;
@@ -53,30 +57,38 @@ public class Player : MonoBehaviour {
         curHealth = maxHealth;
         DeadUI.SetActive(false);
 
-        upButton = GameObject.Find("ButtonUp").GetComponent<ButtonController>();
-        downButton = GameObject.Find("ButtonDown").GetComponent<ButtonController>();
-        leftButton = GameObject.Find("ButtonLeft").GetComponent<ButtonController>();
-        rightButton = GameObject.Find("ButtonRight").GetComponent<ButtonController>();
-        upRight = GameObject.Find("UpRight").GetComponent<ButtonController>();
-        upLeft = GameObject.Find("UpLeft").GetComponent<ButtonController>();
-        downLeft = GameObject.Find("DownLeft").GetComponent<ButtonController>();
-        downRight = GameObject.Find("DownRight").GetComponent<ButtonController>();
 
+        movePig = FindObjectOfType<Joystick>();
 
-        //kolikko äänet
+        //vanha liikkuminen
+        /* upButton = GameObject.Find("ButtonUp").GetComponent<ButtonController>();
+         downButton = GameObject.Find("ButtonDown").GetComponent<ButtonController>();
+         leftButton = GameObject.Find("ButtonLeft").GetComponent<ButtonController>();
+         rightButton = GameObject.Find("ButtonRight").GetComponent<ButtonController>();
+         upRight = GameObject.Find("UpRight").GetComponent<ButtonController>();
+         upLeft = GameObject.Find("UpLeft").GetComponent<ButtonController>();
+         downLeft = GameObject.Find("DownLeft").GetComponent<ButtonController>();
+         downRight = GameObject.Find("DownRight").GetComponent<ButtonController>();
+         */
+
+        //äänet
+            //kolikko
         gameObject.AddComponent<AudioSource>();
-        source.clip = soundCoin;
-
-        source.playOnAwake = false;
+        sourceCoin.clip = soundCoin;
+        sourceCoin.playOnAwake = false;
+            //vihollinen
+        gameObject.AddComponent<AudioSource>();
+        sourceDeath.clip = soundDeath;
+        sourceDeath.playOnAwake = false;
 
     }
-    void Awake()
-    {
-        Application.targetFrameRate = 60;
-    }
+    
 	// Update is called once per frame
 	void Update () {
-        
+
+        //tekee ääniä
+        Soundmaster();
+
         //karma tarkistus
         goodbadkarma();
 
@@ -101,91 +113,52 @@ public class Player : MonoBehaviour {
 	// player movements
 	public void Movement (float playerSpeed){
 
-		if (Input.GetKey("up")||upButton.pressed) {
+        possukeho.velocity = movePig.InputDirection;
+
+        
+        if (Input.GetKey("up")||movePig.InputDirection.y > 0) {
             //Debug.Log ("Move up");
             //player.transform.Translate (0, playerSpeed, 0);
-            possukeho.velocity = new Vector2(0, 1);
+            //possukeho.velocity = new Vector2(0, 1);
             possu.SetBool("walking", true);
-            
 
+            Debug.Log(movePig);
         }
         
-        else if (Input.GetKey("down")||downButton.pressed) {
+        else if (Input.GetKey("down")|| movePig.InputDirection.y < 0) {
             //Debug.Log ("Move down");
             //player.transform.Translate (0, -playerSpeed, 0);
-            possukeho.velocity = new Vector2(0, -1);
+            //possukeho.velocity = new Vector2(0, -1);
             possu.SetBool("walking", true);
 
 
         }
-        else if (Input.GetKey("left")||leftButton.pressed) {
+        if (Input.GetKey("left") || movePig.InputDirection.x < 0)
+        {
             //Debug.Log ("Move left");
             //player.transform.Translate (-playerSpeed, 0, 0);
-            possukeho.velocity = new Vector2(-1, 0);
+            //possukeho.velocity = new Vector2(-1, 0);
             RotatePig(-1);
             possu.SetBool("walking", true);
 
 
         }
-        else if (Input.GetKey("right")||rightButton.pressed) {
+        else if (Input.GetKey("right") || movePig.InputDirection.x > 0)
+        {
             //Debug.Log ("Move right");
             //player.transform.Translate (playerSpeed, 0, 0);
-            possukeho.velocity = new Vector2(1, 0);
+            //possukeho.velocity = new Vector2(1, 0);
             RotatePig(1);
             possu.SetBool("walking", true);
-
-
         }
-        else if (upLeft.pressed)
-        {
-            //Debug.Log ("Move up/left");
-            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-            possukeho.velocity = new Vector2(-1, 1);
-            RotatePig(-1);
-            possu.SetBool("walking", true);
-           
 
-
-        }
-        else if (upRight.pressed)
-        {
-            //Debug.Log ("Move up/left");
-            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-            possukeho.velocity = new Vector2(1, 1);
-            RotatePig(1);
-            possu.SetBool("walking", true);
-           
-
-
-        }
-        else if (downRight.pressed)
-        {
-            //Debug.Log ("Move up/left");
-            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-            possukeho.velocity = new Vector2(1, -1);
-            RotatePig(1);
-            possu.SetBool("walking", true);
-            
-
-
-        }
-        else if (downLeft.pressed)
-        {
-            //Debug.Log ("Move up/left");
-            //player.transform.Translate (-playerSpeed, playerSpeed, 0);
-            possukeho.velocity = new Vector2(-1, -1);
-            RotatePig(-1);
-            possu.SetBool("walking", true);
-            
-
-
-        }
         else
         {
-            possukeho.velocity = new Vector2(0, 0);
+            //possukeho.velocity = new Vector2(0, 0);
             possu.SetBool("walking", false);
 
         }
+        
     }
     //possun animaation kääntö
     void RotatePig(int abs)
@@ -203,10 +176,11 @@ public class Player : MonoBehaviour {
         void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Coin"))
-        { 
+        {
+            gm.points++;
             Destroy(col.gameObject);
-            source.PlayOneShot(soundCoin);
-            gm.points += 1;
+            sourceCoin.PlayOneShot(soundCoin);
+            
         }
         if (col.CompareTag("Health") && curHealth != maxHealth)
         {
@@ -215,6 +189,15 @@ public class Player : MonoBehaviour {
             curHealth++;
         }
 
+    }
+
+    // Äänet
+    void Soundmaster()
+    {
+        if (Enemy.enemyhasdied == true)
+        {
+            sourceCoin.PlayOneShot(soundDeath);
+        }
 
     }
     // kuolema
