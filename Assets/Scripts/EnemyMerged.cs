@@ -26,7 +26,7 @@ public class EnemyMerged : MonoBehaviour {
 
     private EnemyTrigger trigger;
 
-    int dist = 1;
+    int dist = 3;
 
     // enemytrigger
     private static GameObject EnemyCollider;
@@ -80,7 +80,7 @@ public class EnemyMerged : MonoBehaviour {
         enemy = this.gameObject;
         pelaaja = GameObject.Find("Player");
 
-        EnemyCollider = enemy.transform.Find("EnemyTrigger").gameObject;
+
     }
 	
 	// Update is called once per frame
@@ -103,51 +103,26 @@ public class EnemyMerged : MonoBehaviour {
         }
         //EnemyTrigger.EnemyAggro ();
         enemydeath();
+        // Pelaajan ja pahiksen välinen etäisyys
+        Vector2 aa = (player.transform.position - transform.position);
+
+        // Pelaajan ja pahiksen välinen etäisyys muutetaan yksikkövektoriksi
+        Vector2 bb = aa.normalized;
 
 
-        if (player.transform.position.x + 0.01 < transform.position.x && (player.transform.position.x + dist) > transform.position.x)
+        // Jos pelaajan etäisyys pahiksesta on distance verran laita pahis liikkumaan pelaajaa päin
+        if (aa.magnitude < dist)
         {
-            pahiskeho.velocity = new Vector2(-enemySpeed, pahiskeho.velocity.y);
-        }
-        else if (player.transform.position.x - 0.01 > transform.position.x && (player.transform.position.x - dist) < transform.position.x)
-        {
-            pahiskeho.velocity = new Vector2(enemySpeed, pahiskeho.velocity.y);
-        }
-        else
-        {
-            pahiskeho.velocity = new Vector2(0, pahiskeho.velocity.y);
-        }
-
-        if (player.transform.position.y + 0.01 < transform.position.y && (player.transform.position.y + dist) > transform.position.y)
-        {
-            pahiskeho.velocity = new Vector2(pahiskeho.velocity.x, -enemySpeed);
-        }
-        else if (player.transform.position.y - 0.01 > transform.position.y && (player.transform.position.y - dist) < transform.position.y)
-        {
-            pahiskeho.velocity = new Vector2(pahiskeho.velocity.x, enemySpeed);
+            // antaa pahikselle oikean nopeuden
+            pahiskeho.velocity = new Vector2(bb.x * enemySpeed, bb.y * enemySpeed);
         }
         else
         {
-            pahiskeho.velocity = new Vector2(pahiskeho.velocity.x, 0);
+            // pysäittää pahiksen kun pelaaja on tarpeeksi kaukana
+            pahiskeho.velocity = new Vector2(0, 0);
         }
-        //enemytrigger
-        /*//pelaajan x ja y
-        pelaajaX = pelaaja.transform.position.x;
-        pelaajaY = pelaaja.transform.position.y;
 
-        // vihollisen x j y
-        enemyX = enemy.transform.position.x;
-        enemyY = enemy.transform.position.y;
-
-        // pelaja - vihollinen = SUCCESS!
-        goX = pelaajaX - enemyX;
-        goY = pelaajaY - enemyY;
-
-        // Debug.Log (enemyVector);
-        //Debug.Log(pelaaja.transform.position.x);
-        Vector2 enemyVector = enemy.transform.position;
-        Vector2 pelaajaVector = pelaaja.transform.position;
-        */
+        
     }
 
     // enemydamage

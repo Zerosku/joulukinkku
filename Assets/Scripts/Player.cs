@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     public GameObject DeadUI;
 
     // pelaajan liikkuminen
-    public float playerSpeed = 0.03f;
+    public float playerSpeed = 0.1f;
     public Joystick movePig;
 
     // pisteet ja karma
@@ -228,8 +228,6 @@ public class Player : MonoBehaviour {
             possu.SetBool("bad", true);
         }
     }
-
-
-			
+	
 
 }
