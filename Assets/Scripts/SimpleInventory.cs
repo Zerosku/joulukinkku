@@ -17,78 +17,39 @@ public class SimpleInventory : MonoBehaviour {  // tai sit älä käytä tag sys
 	public GameObject Book;
 
 
-
-/*	void itemPicked(){
-		if (CompareTag ("Antidote")) {
-			Antidote.SetActive (true);
-		} else if (CompareTag ("Key")) {
-			Key.SetActive (true);	
-		} else if (CompareTag ("Map")) {
-			Map.SetActive (true);
-		} else if (CompareTag ("CandyCane")) {
-			CandyCane.SetActive (true);
-		} else if (CompareTag ("Book")) {
-			Book.SetActive (true);
-		}
-	} */
-
-
-
-
-
-	// onko spritet oikein määritelty jne? 
 	void Start () {
 
-		//q = GameObject.Find ("q").GetComponent<GameObject> ();
 
-
-		/*Slot1 = GameObject.Find ("Slot1").GetComponent<Sprite> ();
-		Slot2 = GameObject.Find ("Slot2").GetComponent<Sprite> ();  //aluksi oli antidote = "antidotenimi" <sprite>
-		Slot3 = GameObject.Find ("Slot3").GetComponent<Sprite> ();
-		Slot4 = GameObject.Find ("Slot4").GetComponent<Sprite> ();
-		Slot5 = GameObject.Find ("Slot5").GetComponent<Sprite> (); */
-
-		Antidote = GameObject.Find ("I_Antidote").GetComponent<GameObject> ();
+		Antidote= GameObject.Find ("I_Antidote").GetComponent<GameObject> ();
 		Key = GameObject.Find ("I_Key01").GetComponent<GameObject> ();  //aluksi oli antidote = "antidotenimi" <sprite>
 		Map = GameObject.Find ("I_Map").GetComponent<GameObject> ();
 		CandyCane = GameObject.Find ("W_Mace010").GetComponent<GameObject> ();
 		Book = GameObject.Find ("I_Book").GetComponent<GameObject> (); 
 
+	
 
 		//this.Antidote.GetComponent<Image>().enabled = true;
 
 
-		/*AntidoteSlot = GameObject.Find ("Slot1").GetComponent<Sprite> ();
-		KeySlot = GameObject.Find ("Slot2").GetComponent<Sprite> ();
-		MapSlot = GameObject.Find ("Slot3").GetComponent<Sprite> ();
-		CandyCaneSlot = GameObject.Find ("Slot4").GetComponent<Sprite> ();
-		BookSlot = GameObject.Find ("Slot5").GetComponent<Sprite> (); */  // <==== vai noin? tarkista espr. riittää ehk vaa slot1 jne
-		  
-		/*Antidote = GameObject.FindGameObjectWithTag ("Antidote");
-		Key = GameObject.FindGameObjectWithTag ("Key");					//aluksi oli antidoteIcon
-		Map = GameObject.FindGameObjectWithTag ("Map");
-		CandyCane = GameObject.FindGameObjectWithTag ("CandyCane");
-		Book = GameObject.FindGameObjectWithTag ("Book");*/
-	
 	
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
 
-		if (col.CompareTag("Antidote"))
-		{ 
-			Destroy(col.gameObject);
-			Debug.Log ("found antidote");
-			//Antidote.GetComponent<Image>().enabled = true; 
-			Antidote.SetActive(true); 
-										//InventoryManager.itemPicked();
-		}
+
 		if (col.CompareTag("Key"))
 		{
 			Destroy(col.gameObject);
 			Debug.Log ("found key");
 			Key.SetActive (true);
+
+		}
+		if (col.CompareTag("Antidote"))
+		{ 
+			Destroy(col.gameObject);
+			Debug.Log ("found antidote");
+			Antidote.SetActive(true); 
 
 		}
 		if (col.CompareTag("Map"))
