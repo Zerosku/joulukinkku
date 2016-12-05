@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour {
         vihu = GetComponent<Animator>();
 		enemy = GameObject.Find ("EnemyBox");
 		pahiskeho = GetComponent<Rigidbody2D>();
-        enemyHealth = 15;
+        enemyHealth = 100;
         enemyhasdied = false;
     }
 	
