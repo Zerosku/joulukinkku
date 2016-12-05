@@ -19,9 +19,8 @@ public class Player : MonoBehaviour {
     public float playerSpeed = 0.1f;
     public Joystick movePig;
 
-    // pisteet ja karma
+    // pisteet ja karma haetaan gamemasterista
     public GameMaster gm;
-    public int karma = 0;
 
     // äänet
 
@@ -121,8 +120,6 @@ public class Player : MonoBehaviour {
             //player.transform.Translate (0, playerSpeed, 0);
             //possukeho.velocity = new Vector2(0, 1);
             possu.SetBool("walking", true);
-
-            Debug.Log(movePig);
         }
         
         else if (Input.GetKey("down")|| movePig.InputDirection.y < 0) {
@@ -219,11 +216,11 @@ public class Player : MonoBehaviour {
     // karma mittari
     void goodbadkarma()
     {
-        if (karma > 5)
+        if (gm.karma >= 5)
         {
             possu.SetBool("good", true);
         }
-        if (karma < -5)
+        if (gm.karma <= -5)
         {
             possu.SetBool("bad", true);
         }
