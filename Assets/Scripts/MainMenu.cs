@@ -5,28 +5,37 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-    /*public Canvas CreditsUI;
+    // tämä koodi hallitsee main menun kaikkia nappeja ja toimintoja
+    
+    public GameObject CreditsUI;
 
     private bool credits = false;
 
-    private bool creditBool = false;
     private Button CreditsButton;
 
 
-    void Start()
-    {
-        //laittaa creditsin kiinni
-        CreditsUI.transform.
-
-    }
     void Update()
     {
-        if (credits)
-        { 
-            creditBool = !creditBool;
-            CreditsUI.SetActive(creditBool);
+        if (Input.GetButtonDown("Pause"))
+        {
+            credits = !credits;
         }
-    }*/
+        //pysäyttää peliajan kun pause on true
+        if (credits)
+        {
+            CreditsUI.SetActive(true);
+            
+
+
+        }
+        if (!credits)
+        {
+            CreditsUI.SetActive(false);
+            
+
+
+        }
+    }
     public void PlayGame()
     {
         SceneManager.LoadScene(1);
@@ -38,10 +47,10 @@ public class MainMenu : MonoBehaviour {
     }
     public void Credits()
     {
-        //credits = true;
+        credits = true;
     }
     public void CloseCredits()
     {
-        //credits = false;
+        credits = false;
     }
 }

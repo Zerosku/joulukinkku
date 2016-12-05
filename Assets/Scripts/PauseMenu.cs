@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
+    // tämä koodi hallitsee pause menua ja kaikkia sen toimintoja
+
     Player possu;
 
     public GameObject PauseUI;
