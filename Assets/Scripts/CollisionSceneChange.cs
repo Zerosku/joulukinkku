@@ -5,14 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class CollisionSceneChange : MonoBehaviour {
 
+	/// <summary>
+	/// This script changes the scene when the player gameobject collides with a 2D box collider on the edge of the screen.
+	/// This script is attached to the collider.
+	/// </summary>
+	/// <param name="collider">Collider.</param>
 
 
 
-
-	void OnTriggerEnter2D (Collision2D collider){
+	void OnTriggerEnter2D (Collider2D collider){   
 	
-		if (collider.gameObject.tag == "player") {
-			SceneManager.LoadScene (2);
+		if (collider.CompareTag("Player")) {  //If the collider collides with a gameobject tagged "Player"...
+			SceneManager.LoadScene (1);             //The next scene begins
 	
 		}
 	}
