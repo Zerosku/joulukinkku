@@ -4,13 +4,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// This script is attached to the player gameobject and to the sinventoy panel.
+/// This script is attached to the player gameobject and to the simple inventoy panel.
 /// Here we first create and find the item icon objects. Then we define what happens when the player's
 ///  collider reacts to the quest items' colliders. 
 /// </summary>
 
 public class SimpleInventory : MonoBehaviour {  
-
+	//Item icons
 	public GameObject Antidote;
 	public GameObject Key;
 	public GameObject Map;				
@@ -19,7 +19,7 @@ public class SimpleInventory : MonoBehaviour {
 
 
 	void Start () {
-
+		//Finding item icons 
 		Antidote= GameObject.Find ("I_Antidote").GetComponent<GameObject> ();
 		Key = GameObject.Find ("I_Key01").GetComponent<GameObject> ();  
 		Map = GameObject.Find ("I_Map").GetComponent<GameObject> ();
@@ -28,18 +28,22 @@ public class SimpleInventory : MonoBehaviour {
 
 	}
 
+
+	//When the player character collides with a QuestItem, the item is destroyed and 
+	//the corresponding icon is set active in the inventory bar
+
 	void OnTriggerEnter2D(Collider2D col)
 	{
 
 
-		if (col.CompareTag("Key"))
+		if (col.CompareTag("Key"))	  //If the player collides with an item tagged "Key"...
 		{
-			Destroy(col.gameObject);
-			Debug.Log ("found key");
-			Key.SetActive (true);
+			Destroy(col.gameObject);  //QuestKey is destroyed
+			Debug.Log ("found key");  
+			Key.SetActive (true);     //The Key inventory icon is set active. 
 
 		}
-		if (col.CompareTag("Antidote"))
+		if (col.CompareTag("Antidote")) 
 		{ 
 			Destroy(col.gameObject);
 			Debug.Log ("found antidote");
