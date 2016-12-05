@@ -3,35 +3,29 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SimpleInventory : MonoBehaviour {  // tai sit älä käytä tag systeemii ja luo omat scriptit itemin tuhoomista ja keräämistä varten
+/// <summary>
+/// This script is attached to the player gameobject and to the sinventoy panel.
+/// Here we first create and find the item icon objects. Then we define what happens when the player's
+///  collider reacts to the quest items' colliders. 
+/// </summary>
 
-	/*public Sprite Slot1;  // vai pitäiskö olla gameobject
-	public Sprite Slot2;
-	public Sprite Slot3;    //aluksi sprite antidote jne
-	public Sprite Slot4;
-	public Sprite Slot5; */
+public class SimpleInventory : MonoBehaviour {  
+
 	public GameObject Antidote;
 	public GameObject Key;
-	public GameObject Map;				//aluksi GO antidoteicon jne
+	public GameObject Map;				
 	public GameObject CandyCane;
 	public GameObject Book;
 
 
 	void Start () {
 
-
 		Antidote= GameObject.Find ("I_Antidote").GetComponent<GameObject> ();
-		Key = GameObject.Find ("I_Key01").GetComponent<GameObject> ();  //aluksi oli antidote = "antidotenimi" <sprite>
+		Key = GameObject.Find ("I_Key01").GetComponent<GameObject> ();  
 		Map = GameObject.Find ("I_Map").GetComponent<GameObject> ();
 		CandyCane = GameObject.Find ("W_Mace010").GetComponent<GameObject> ();
 		Book = GameObject.Find ("I_Book").GetComponent<GameObject> (); 
 
-	
-
-		//this.Antidote.GetComponent<Image>().enabled = true;
-
-
-	
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -72,14 +66,10 @@ public class SimpleInventory : MonoBehaviour {  // tai sit älä käytä tag sys
 			Book.SetActive (true);
 		}
 
-
 	}
 
 	void Update () {
 		
 	}
-
-
-	// Update is called once per frame
 
 }
