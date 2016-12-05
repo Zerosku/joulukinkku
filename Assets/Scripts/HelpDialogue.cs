@@ -49,7 +49,7 @@ public class HelpDialogue : MonoBehaviour {
 	void OnGUI() {
 		GUI.skin = Dialogue;
 
-		/**if (DialogueTouch == true && DialogueAction == true) {
+		if (DialogueTouch == true && DialogueAction == true) {
 			
 			GUILayout.BeginArea (new Rect (DialogueWidth, DialogueHeight, 200, 150));
 		}
@@ -85,7 +85,7 @@ public class HelpDialogue : MonoBehaviour {
 			scene = "dialog21";
 			}
 
-		if (scene == "dialog21") {
+		/*if (scene == "dialog21") {
 			GUILayout.BeginVertical ();
 			GUILayout.Label ("I need 5 coins to get some food for the holiday.");
 			GUILayout.EndVertical ();
@@ -117,6 +117,6 @@ public class HelpDialogue : MonoBehaviour {
 				GUILayout.EndVertical ();
 				// karma --
 			}
-		} **/
+		}*/ 
 	}
 }
