@@ -33,7 +33,7 @@ public class EnemyTrigger : Enemy
     public static float goY;
 
     // vihollisen nopeus
-    private  float enemySpeed = 0.02f;
+    private  float enemySpeed = 1f;
 
     void Start()
     {

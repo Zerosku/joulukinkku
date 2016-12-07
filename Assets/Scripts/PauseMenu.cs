@@ -63,7 +63,9 @@ public class PauseMenu : MonoBehaviour {
     //aloittaa kyseisen kentän alusta
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(2);
+        PlayerPrefs.SetInt("Player Score", 0);
+        PlayerPrefs.SetInt("Player Karma", 0);
     }
     //palaa päävalikkoon
     public void MainMenu()
