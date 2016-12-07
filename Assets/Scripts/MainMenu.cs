@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour {
 
     // tämä koodi hallitsee main menun kaikkia nappeja ja toimintoja
+    public GameMaster gm;
     
     public GameObject CreditsUI;
 
@@ -13,6 +14,10 @@ public class MainMenu : MonoBehaviour {
 
     private Button CreditsButton;
 
+    void start()
+    {
+        gm = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
+    }
 
     void Update()
     {
@@ -38,7 +43,9 @@ public class MainMenu : MonoBehaviour {
     }
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
+        PlayerPrefs.SetInt("Player Score", 0);
+        PlayerPrefs.SetInt("Player Karma", 0);
     }
 
     public void ExitGame()
