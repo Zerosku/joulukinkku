@@ -16,7 +16,8 @@ public class Player : MonoBehaviour {
     public GameObject DeadUI;
 
     // pelaajan liikkuminen
-    public float playerSpeed = 0.1f;
+    public float playerSpeedJoy = 0.1f;
+    public float playerSpeedBut = 0.1f;
     public Joystick movePig;
 
     // pisteet ja karma haetaan gamemasterista
@@ -92,7 +93,8 @@ public class Player : MonoBehaviour {
         goodbadkarma();
 
         //liikkuminen
-        Movement(playerSpeed);
+        MovementJoy(playerSpeedJoy);
+        MovementBut(playerSpeedBut);
         transform.rotation = Quaternion.identity;
         
         
@@ -110,7 +112,7 @@ public class Player : MonoBehaviour {
     }
 
 	// player movements
-	public void Movement (float playerSpeed){
+	public void MovementJoy (float playerSpeedJoy){
 
         possukeho.velocity = movePig.InputDirection;
 
@@ -156,6 +158,50 @@ public class Player : MonoBehaviour {
 
         }
         
+    }
+    public void MovementBut (float playerSpeedBut)
+    {
+        if (Input.GetKey("up"))
+        {
+            //Debug.Log ("Move up");
+            //player.transform.Translate (0, playerSpeed, 0);
+            possukeho.velocity = new Vector2(0, 1);
+            possu.SetBool("walking", true);
+        }
+
+        else if (Input.GetKey("down"))
+        {
+            //Debug.Log ("Move down");
+            //player.transform.Translate (0, -playerSpeed, 0);
+            possukeho.velocity = new Vector2(0, -1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else if (Input.GetKey("left"))
+        {
+            //Debug.Log ("Move left");
+            //player.transform.Translate (-playerSpeed, 0, 0);
+            possukeho.velocity = new Vector2(-1, 0);
+            RotatePig(-1);
+            possu.SetBool("walking", true);
+
+
+        }
+        else if (Input.GetKey("right"))
+        {
+            //Debug.Log ("Move right");
+            //player.transform.Translate (playerSpeed, 0, 0);
+            possukeho.velocity = new Vector2(1, 0);
+            RotatePig(1);
+            possu.SetBool("walking", true);
+        }
+
+        else
+        {
+           //possu.SetBool("walking", false);
+
+        }
     }
     //possun animaation kääntö
     void RotatePig(int abs)
@@ -216,11 +262,11 @@ public class Player : MonoBehaviour {
     // karma mittari
     void goodbadkarma()
     {
-        if (gm.karma >= 5)
+        if (gm.karma >= 2)
         {
             possu.SetBool("good", true);
         }
-        if (gm.karma <= -5)
+        if (gm.karma <= -2)
         {
             possu.SetBool("bad", true);
         }
