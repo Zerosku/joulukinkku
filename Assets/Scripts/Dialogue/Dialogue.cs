@@ -53,7 +53,7 @@ public class Dialogue : MonoBehaviour {
 		// here we check if player collides with trigger and we proceed the message
 		if (touch == true) {
 			if (Input.GetKeyDown ("x") || ActionButton.pressed) {
-				if (gm.points >= 5) {
+				if (gm.points >= 50) {
 					dialog.text = "Oh my goodness, thank you kind pig!";
 					gm.points = gm.points - 50;
 					Destroy (this);

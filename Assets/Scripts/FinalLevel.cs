@@ -14,12 +14,12 @@ public class FinalLevel : MonoBehaviour {
 {
     if (Enemy.enemyhasdied)
     {
-            if (gm.karma > 3)
+            if (gm.karma >= 2)
             {
                 SceneManager.LoadScene(4);             //good ending
 
             }
-            if (gm.karma < -3)
+            if (gm.karma <= -2)
             {
                 SceneManager.LoadScene(5);             //bad ending
 
