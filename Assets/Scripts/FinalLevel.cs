@@ -2,7 +2,14 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class FinalLevel : MonoBehaviour {
+public class FinalLevel : MonoBehaviour { 
+
+    // triggers the different endings based on the players karma
+
+    // the final trigger only works if the final boss is killed
+
+
+
     public GameMaster gm;
 
     void Start()
@@ -12,7 +19,7 @@ public class FinalLevel : MonoBehaviour {
     }
     void OnTriggerEnter2D(Collider2D col)
 {
-    if (Enemy.enemyhasdied)
+    if (Enemy.enemyhasdied)                             // checks if the enemy is dead before activating the trigger to the final scene
     {
             if (gm.karma >= 2)
             {

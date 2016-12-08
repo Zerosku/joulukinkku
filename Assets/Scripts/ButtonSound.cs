@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ButtonSound : MonoBehaviour {
 
+    //plays a sound on button click
+
     public AudioClip sound;
     
     private Button button { get { return GetComponent<Button>(); } }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
-    // tämä koodi hallitsee pause menua ja kaikkia sen toimintoja
+    // this code funcions as the in-games pause menu
 
     Player possu;
 
@@ -21,7 +21,7 @@ public class PauseMenu : MonoBehaviour {
         possu = GameObject.Find("Player").GetComponent<Player>();
 
 
-        //laittaa pelin aloituksessa pausen pois päältä
+        // sets the pause off when the game starts
         PauseUI.SetActive(false);
 
         PauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
@@ -39,7 +39,7 @@ public class PauseMenu : MonoBehaviour {
         {
             Paused = !Paused;
         }
-        //pysäyttää peliajan kun pause on true
+        // stops gametime when paused
         if (Paused)
         {
             PauseUI.SetActive(true);
@@ -55,25 +55,25 @@ public class PauseMenu : MonoBehaviour {
 
         }
     }
-    //resume nappi joka jatkaa peliä siitä mihin jäätin
+    // deactivates pause
     public void Resume ()
     {
         Paused = false;
     }
-    //aloittaa kyseisen kentän alusta
+    //restarts the game
     public void Restart()
     {
         SceneManager.LoadScene(2);
         PlayerPrefs.SetInt("Player Score", 0);
         PlayerPrefs.SetInt("Player Karma", 0);
     }
-    //palaa päävalikkoon
+    // returns to main menu
     public void MainMenu()
     {
         SceneManager.LoadScene(0);
 
     }
-    //lopettaa pelin
+    // quits game
     public void Quit()
     {
         Application.Quit();

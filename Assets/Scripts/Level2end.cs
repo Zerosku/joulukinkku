@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Level2end : MonoBehaviour {
 
+    // functions as the forest levels ending trigger
+
     public GameMaster gm;
 
 

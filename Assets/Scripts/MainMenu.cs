@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-    // tämä koodi hallitsee main menun kaikkia nappeja ja toimintoja
+    // this code controls all the buttons of the main menu
+
     public GameMaster gm;
     
     public GameObject CreditsUI;
@@ -21,11 +22,12 @@ public class MainMenu : MonoBehaviour {
 
     void Update()
     {
+
         if (Input.GetButtonDown("Pause"))
         {
             credits = !credits;
         }
-        //pysäyttää peliajan kun pause on true
+        
         if (credits)
         {
             CreditsUI.SetActive(true);
@@ -41,22 +43,22 @@ public class MainMenu : MonoBehaviour {
 
         }
     }
-    public void PlayGame()
+    public void PlayGame()  // sets the players karma and coins to 0 and starts the first level
     {
         SceneManager.LoadScene(2);
         PlayerPrefs.SetInt("Player Score", 0);
         PlayerPrefs.SetInt("Player Karma", 0);
     }
 
-    public void ExitGame()
+    public void ExitGame()  // exits the application
     {
         Application.Quit();
     }
-    public void Credits()
+    public void Credits()  // activates credits canvas
     {
         credits = true;
     }
-    public void CloseCredits()
+    public void CloseCredits() // deactivates credits canvas
     {
         credits = false;
     }

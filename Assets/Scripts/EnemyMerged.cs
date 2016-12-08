@@ -3,7 +3,11 @@ using System.Collections;
 
 public class EnemyMerged : MonoBehaviour {
     
-    
+    // 3 enemy scripts combined into one large script, may have some useless functions
+    // contains information about the enemys movement
+    // 
+
+
     // enemydamage
     public AudioClip soundDamage;
     private AudioSource source { get { return GetComponent<AudioSource>(); } }
