@@ -37,7 +37,7 @@ public class Dialogue : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "Player") {
 			touch = true;
-			dialog.text = "Can you spare me 5 coins for Christmas?";
+			dialog.text = "Can you spare me 50 coins for Christmas?";
 		}
 	}
 
@@ -55,11 +55,11 @@ public class Dialogue : MonoBehaviour {
 			if (Input.GetKeyDown ("x") || ActionButton.pressed) {
 				if (gm.points >= 5) {
 					dialog.text = "Oh my goodness, thank you kind pig!";
-					gm.points = gm.points - 5;
+					gm.points = gm.points - 50;
 					Destroy (this);
 					gm.karma++;
 					Debug.Log (gm.karma);
-				} else if (gm.points < 5) {
+				} else if (gm.points < 50) {
 					dialog.text = "Try again later :(";
 				}
 			} else {

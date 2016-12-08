@@ -11,6 +11,7 @@ public class GameMaster : MonoBehaviour {
     public Text pointsText;
     public Text karmaText;
 
+    public string karmalevel;
 
     void Start ()
     {
@@ -19,13 +20,27 @@ public class GameMaster : MonoBehaviour {
 
         pointsText = GameObject.Find("CoinsText").GetComponent<Text>();
         karmaText = GameObject.Find("KarmaText").GetComponent<Text>();
-
-
+        
+        
+        
     }
     void Update()
     {
         pointsText.text = (": " + points);
-        karmaText.text = ("Karma: " + karma);
+        karmaText.text = ("Karma: " + karmalevel);
+
+        if (karma >= 2)
+        {
+            karmalevel = "Good";
+        }
+        else if (karma <= -2)
+        {
+            karmalevel = "Bad";
+        }
+        else
+        {
+            karmalevel = "Neutral";
+        }
 
     }
 
