@@ -5,25 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
-    //possun osia
+    //pigs parts
 	public static GameObject player;
     private Rigidbody2D possukeho;
 
-    //possun animaatio
+    //pigs animation
     private Animator possu;
     public bool facingright = true;
 
     public GameObject DeadUI;
 
-    // pelaajan liikkuminen
+    // players movement
     public float playerSpeedJoy = 0.1f;
     public float playerSpeedBut = 0.1f;
     public Joystick movePig;
 
-    // pisteet ja karma haetaan gamemasterista
+    // points and karma are fetched from gamemaster
     public GameMaster gm;
 
-    // äänet
+    // sounds
 
     public AudioClip soundDeath;
     private AudioSource sourceDeath { get { return GetComponent<AudioSource>(); } }
@@ -31,12 +31,14 @@ public class Player : MonoBehaviour {
     public AudioClip soundCoin;
     private AudioSource sourceCoin { get { return GetComponent<AudioSource>(); } }
 
-    // terveys
+    // health
     public static int curHealth;
     public int maxHealth = 5;
     public bool kuolema = false;
     public GameObject Paussi;
 
+
+	/* old movement ignore
     private ButtonController upButton;
     private ButtonController downButton;
     private ButtonController leftButton;
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour {
     private ButtonController upLeft;
     private ButtonController downLeft;
     private ButtonController downRight;
+    */
 
 
     // Use this for initialization
@@ -60,7 +63,7 @@ public class Player : MonoBehaviour {
 
         movePig = FindObjectOfType<Joystick>();
 
-        //vanha liikkuminen
+        //old movement
         /* upButton = GameObject.Find("ButtonUp").GetComponent<ButtonController>();
          downButton = GameObject.Find("ButtonDown").GetComponent<ButtonController>();
          leftButton = GameObject.Find("ButtonLeft").GetComponent<ButtonController>();
@@ -71,12 +74,12 @@ public class Player : MonoBehaviour {
          downRight = GameObject.Find("DownRight").GetComponent<ButtonController>();
          */
 
-        //äänet
-            //kolikko
+        //sounds
+            //coins
         gameObject.AddComponent<AudioSource>();
         sourceCoin.clip = soundCoin;
         sourceCoin.playOnAwake = false;
-            //vihollinen
+            //enemies
         gameObject.AddComponent<AudioSource>();
         sourceDeath.clip = soundDeath;
         sourceDeath.playOnAwake = false;
@@ -86,13 +89,13 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //tekee ääniä
+        //makes sounds
         Soundmaster();
 
-        //karma tarkistus
+        //checks karma
         goodbadkarma();
 
-        //liikkuminen
+        //movement
         MovementJoy(playerSpeedJoy);
         MovementBut(playerSpeedBut);
         transform.rotation = Quaternion.identity;
@@ -203,7 +206,7 @@ public class Player : MonoBehaviour {
 
         }
     }
-    //possun animaation kääntö
+    //pig animation rotate
     void RotatePig(int abs)
     {
         
@@ -215,7 +218,7 @@ public class Player : MonoBehaviour {
     
 
     }
-        // pelaaja ja osumat vihollisiin tai esineisiin
+        // player collidings with things or enemies
         void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Coin"))
@@ -234,7 +237,7 @@ public class Player : MonoBehaviour {
 
     }
 
-    // Äänet
+    // sounds
     void Soundmaster()
     {
         if (Enemy.enemyhasdied == true)
@@ -243,11 +246,11 @@ public class Player : MonoBehaviour {
         }
 
     }
-    // kuolema
+    // death
     void Die ()
     {
         kuolema = !kuolema;
-        //pysäyttää peliajan kun kuolema on 
+        //stops the game time when dead
         Paussi.GetComponent<PauseMenu>().enabled = false;
 
         DeadUI.SetActive(true);
@@ -259,7 +262,7 @@ public class Player : MonoBehaviour {
     }
 		
 
-    // karma mittari
+    // karma meter
     void goodbadkarma()
     {
         if (gm.karma >= 2)

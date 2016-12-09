@@ -2,8 +2,10 @@
 using System.Collections;
 
 
-public class EnemyDamage : MonoBehaviour
-{
+public class EnemyDamage : MonoBehaviour {
+
+	// this is the script for enemy taking damage from player and giving damage to player
+
     public AudioClip soundDamage;
     private AudioSource source { get { return GetComponent<AudioSource>(); } }
     private int frames = 0;
@@ -22,13 +24,13 @@ public class EnemyDamage : MonoBehaviour
     }
     public void OnTriggerStay2D(Collider2D col)
     {
-        //kun enemy osuu possun potkaisualueelle
+        // when enemy hits the pigs trigger area
         if (col.CompareTag("Hitbox"))
         {
             Enemy.vihu.SetTrigger("damagetrigger");
             
 
-            //kääntää enemyn animaation pelaajan suuntaan
+            // flips the enemy to face the player
             if (!Enemy.player.facingright)
             {
                 Enemy.pahiskeho.AddForce(new Vector2(-200, 0));

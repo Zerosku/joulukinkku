@@ -4,11 +4,13 @@ using System.Collections;
 public class EnemyTrigger : Enemy
 {
 
+	// this is the script for when enemy detects a player, he/she starts walking towards the piggy
+
     private GameObject EnemyCollider;
 
     private static bool touching = false;
 
-    // enemy
+    // enemys things
     private static Transform enemy;
 
     private static Vector2 enemyVector;
@@ -18,7 +20,7 @@ public class EnemyTrigger : Enemy
     private  float enemyY;
 
 
-    //player
+    //players things
     private  GameObject pelaaja;
 
     private  Vector2 pelaajaVector;
@@ -27,12 +29,12 @@ public class EnemyTrigger : Enemy
 
     private  float pelaajaY;
 
-    //player - enemy
+    //player position - enemy position
     public static float goX;
 
     public static float goY;
 
-    // vihollisen nopeus
+    // enemy speed
     private  float enemySpeed = 1f;
 
     void Start()
@@ -52,15 +54,15 @@ public class EnemyTrigger : Enemy
     { 
 
 
-        //pelaajan x ja y
+        //players x & y position
         pelaajaX = pelaaja.transform.position.x;
         pelaajaY = pelaaja.transform.position.y;
 
-        // vihollisen x j y
+        // enemys x & y position
         enemyX = enemy.transform.position.x;
         enemyY = enemy.transform.position.y;
 
-        // pelaja - vihollinen = SUCCESS!
+        // player pos - enemy pos = SUCCESS! wanted direction
         goX = pelaajaX - enemyX;
         goY = pelaajaY - enemyY;
 
@@ -70,13 +72,14 @@ public class EnemyTrigger : Enemy
         Vector2 pelaajaVector = pelaaja.transform.position;
     }
 
-    // enemysettii
+    // enemywalk starts traversing towards the player
     public static void EnemyWalk()
     {
         //transform.LookAt (lookAtPlayer);
         pahiskeho.velocity = new Vector2(goX, goY);
     }
 
+	// enemyaggro detects if player is close enough (in range) for the enemy to start going towards to
     public static void EnemyAggro()
     {
 
@@ -91,7 +94,7 @@ public class EnemyTrigger : Enemy
         }
     }
 
-    // kun pelaaja osuu vihollisen enemytrigger- alueelle
+    // when player touches the enemys enemytrigger- area
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Player")
@@ -100,7 +103,7 @@ public class EnemyTrigger : Enemy
         }
     }
 
-    // hieman turha, yläolevan vastakohta
+    // opposite of ontriggerstay2d, whe player is NOT touching the area
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag != "Player")

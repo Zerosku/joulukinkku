@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DialogueMap : MonoBehaviour
 {
-    // this script is for the dialogue of some normal piggies who want 5 coins :)
+    // this script is for the dialogue of pig who wants a map
 
     //dialogue text
     private TextMesh dialog;

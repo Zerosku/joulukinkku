@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
+// this script is for the enemy, it contains all essential stats like health and animator-things
+
 	private static GameObject enemy;
 
 	public static Rigidbody2D pahiskeho;
