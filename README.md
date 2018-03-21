@@ -1,6 +1,6 @@
 # Pig On the Run
 
-This is a mobile game we developed in Unity using C# as the core programming language.
+This is a rather simple mobile game that we developed in Unity using C# as the core programming language.
 
 It is a story about a pig, who has to make his way to the warm embrace of his family, in time for Christmas Eve.
 You collect money and make the right choices on your way home.
